@@ -1,6 +1,6 @@
 <div align="center">
 
-# Prompted-Aspect KPA (PAKPA): Quantitative Review Summarization
+# Prompted Aspect KPA (PAKPA): Quantitative Review Summarization
 
 </div>
 
