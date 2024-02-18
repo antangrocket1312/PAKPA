@@ -4,6 +4,6 @@
 
 </div>
 
-This repository maintains the code, data, and model checkpoints for the paper *Prompted-Aspect-Based Key Point Analysis for Quantitative Review Summarization using Large Language Models*
+This repository maintains the code, data, and model checkpoints for the paper *Prompted Aspect Key Point Analysis for Quantitative Review Summarization*
 
 # Code to release soon.
