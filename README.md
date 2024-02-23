@@ -30,6 +30,11 @@ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.o
 ## Dataset
 We released both the Yelp and SPACE datasets used in our evaluation tasks (dimensions) of KPs. Datasets can be accessed under the ```data/``` folder, 
 following the [```yelp/```](/data/yelp) and [```space/```](/data/space) subdirectories for each dataset.
+In each dataset directory, 
+- ```input_reviews/``` contains the raw input dataset file and also samples from the dataset for experiment
+- ```process_absa_reviews/``` consists of reviews already analyzed for ABSA predictions
+- ```review_comments_clustered/``` consists of 
+- ```summaries/``` consists of the final KP summaries produced by the framework 
 
 ## Framework Inference
 ![Model architecture](Abstractive_KPA_Diagram.png)
@@ -87,5 +92,7 @@ python3 -m fastchat.serve.openai_api_server --host localhost --port 8000
 [//]: # (### Aspect-Sentiment-based Comment Clustering)
 
 [//]: # (### KP Generation)
+
+[//]: # (# Evaluation of KP Textual Quality with Aspect-Specific Ground Truth)
 
 # More code coming soon.
