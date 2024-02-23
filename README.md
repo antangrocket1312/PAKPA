@@ -33,7 +33,7 @@ following the [```yelp/```](/data/yelp) and [```space/```](/data/space) subdirec
 In each dataset directory, 
 - ```input_reviews/``` contains the raw input dataset file and also samples from the dataset for experiment
 - ```process_absa_reviews/``` consists of reviews already analyzed for ABSA predictions
-- ```review_comments_clustered/``` consists of 
+- ```review_comments_clustered/``` consists of clusters of comments already clustered by their similar aspect terms
 - ```summaries/``` consists of the final KP summaries produced by the framework 
 
 ## Framework Inference
