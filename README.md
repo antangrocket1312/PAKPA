@@ -27,25 +27,31 @@ conda install -c anaconda cudatoolkit
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 ```
 
+## Framework
+![Model architecture](Abstractive_KPA_Diagram.png)
+
+We propose a pipeline framework, namely Prompted Aspect Key Point Analysis (PAKPA), for quantitative opinion summarization for business reviews. 
+PAKPA employ aspect sentiment analysis to identify aspects in comments as the opinion target and then  generate and quantify KPs grounded in aspects and their sentiment. 
+The below figure illustrates PAKPA framework with examples.
+Given reviews for a business entity, 
+PAKPA performs KPA for reviews and 
+generates KPs of distinctive aspects and quantities measuring the prevalence of KPs. PAKPA consists of three components/stages: 
+- **Stage 1: Prompted ABSA of Comments**
+- **Stage 2: Aspect-Sentiment-based Comment Clustering**
+- **Stage 3: Prompted Aspect KP Generation**
+
 ## Dataset
 We released both the Yelp and SPACE datasets used in our evaluation tasks (dimensions) of KPs. Datasets can be accessed under the ```data/``` folder, 
 following the [```yelp/```](/data/yelp) and [```space/```](/data/space) subdirectories for each dataset.
 In each dataset directory, 
 - ```input_reviews/``` contains the raw input dataset file and also samples from the dataset for experiment
-- ```process_absa_reviews/``` consists of reviews already analyzed for ABSA predictions
-- ```review_comments_clustered/``` consists of clusters of comments already clustered by their similar aspect terms
-- ```summaries/``` consists of the final KP summaries produced by the framework 
+- ```process_absa_reviews/``` consists of reviews already analyzed for ABSA predictions (Stage 1)
+- ```review_comments_clustered/``` consists of clusters of comments already clustered by their similar aspect terms (Stage 2)
+- ```summaries/``` consists of the final KP summaries produced by the framework (Stage 2)
 
-## Framework Inference
-![Model architecture](Abstractive_KPA_Diagram.png)
+## Inference
 We offer two options to perform inference of our pipeline framework (PAKPA), using Jupyter Notebook files (```notebook```) or Python inference scripts (```script```). 
-Each file in the respective folder represent a stage of the pipeline, including:
-
-- **Stage 1: Prompted ABSA of Comments**
-- **Stage 2: Aspect-Sentiment-based Comment Clustering**
-- **Stage 3: Prompted Aspect KP Generation**
-
-Below is the directory structures for stages of the pipeline:
+Each file in the respective folder represent a stage of the pipeline. Below is the directory structures for stages of the pipeline:
 ```
 notebook
 ├── space (or) yelp
