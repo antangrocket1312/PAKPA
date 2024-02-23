@@ -60,7 +60,7 @@ The FastChat server is compatible with both [openai-python](https://github.com/o
 
 **Note:** *Vicuna-7B is used as the LLMs for Prompted ABSA. This model requires around 14GB of GPU memory.
 If you do not have enough memory, you can enable 8-bit compression by adding --load-8bit to commands below. This can reduce memory usage by around half with slightly degraded model quality.
-For more information or instruction to run on other architectures, please see this [link](https://github.com/lm-sys/FastChat/tree/main?tab=readme-ov-file#inference-with-command-line-interface)*
+For more information to reduce memory requirement or instruction to run on other architectures, please see this [link](https://github.com/lm-sys/FastChat/tree/main?tab=readme-ov-file#inference-with-command-line-interface)*
 
 First, launch the controller
 
