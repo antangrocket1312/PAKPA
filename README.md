@@ -43,11 +43,22 @@ generates KPs of distinctive aspects and quantities measuring the prevalence of 
 ## Dataset
 We released both the Yelp and SPACE datasets used in our evaluation tasks (dimensions) of KPs. Datasets can be accessed under the ```data/``` folder, 
 following the [```yelp/```](/data/yelp) and [```space/```](/data/space) subdirectories for each dataset.
-In each dataset directory, 
-- ```input_reviews/``` contains the raw input dataset file and also samples from the dataset for experiment
-- ```process_absa_reviews/``` consists of reviews already analyzed for ABSA predictions (Stage 1)
-- ```review_comments_clustered/``` consists of clusters of comments already clustered by their similar aspect terms (Stage 2)
-- ```summaries/``` consists of the final KP summaries produced by the framework (Stage 2)
+
+[//]: # (In each dataset directory, )
+
+[//]: # (- ```input_reviews/``` contains the raw input dataset file and also samples from the dataset for experiment)
+
+[//]: # (- ```process_absa_reviews/``` consists of reviews already analyzed for ABSA predictions &#40;Stage 1&#41;)
+
+[//]: # (- ```review_comments_clustered/``` consists of clusters of comments already clustered by their similar aspect terms &#40;Stage 2&#41;)
+
+[//]: # (- ```summaries/``` consists of the final KP summaries produced by the framework &#40;Stage 3&#41;)
+
+Files in each folder:
+* ```input_reviews.pkl```: Raw input samples from the dataset for experiment.
+* ```reviews_absa_processed.pkl```: Reviews already analyzed for ABSA predictions &#40;Stage 1&#41;
+* ```reviews_clustered.pkl```: clusters of comments already clustered by their similar aspect terms &#40;Stage 2&#41;)
+* ```summaries.pkl```: final KP summaries produced for the clusters by the framework &#40;Stage 3&#41;)
 
 ## Inference
 We offer two options to perform inference of our pipeline framework (PAKPA), using Jupyter Notebook files (```notebook```) or Python inference scripts (```script```). 

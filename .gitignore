@@ -1,9 +1,6 @@
 /checkpoints/*
 /*.zip
 
-/data/yelp/*
-/data/*.zip
-
 __pycache__/
 *.py[cod]
 *$py.class
