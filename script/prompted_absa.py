@@ -22,11 +22,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_reviews_file", type=str, default='input_reviews.pkl',
                         help="The name of the input reviews file placed under 'yelp' or 'space'.")
-    parser.add_argument("--dataset", type=str, default="space",
+    parser.add_argument("--output_file_name", type=str, default='reviews_absa_processed.pkl',
+                        help="The name of the output reviews file to be saved under 'yelp' or 'space'.")
+    parser.add_argument("--dataset", type=str, required=True,
                         help="The dataset for inference. Either 'yelp' or 'space'")
 
     args = parser.parse_args()
     input_reviews_file = args.input_reviews_file
+    output_file_name = args.output_file_name
     dataset = args.dataset
 
     # # Load dataset
@@ -80,4 +83,4 @@ if __name__ == "__main__":
     processed_df['prompt_aspect_lemm'] = processed_df['prompt_aspect'].apply(
         lambda aspect: " ".join([token.lemma_ for token in nlp(f'{aspect.lower()}')])
     )
-    processed_df.to_pickle(f"./data/{dataset}/reviews_absa_processed.pkl")
+    processed_df.to_pickle(f"./data/{dataset}/{output_file_name}.pkl")
