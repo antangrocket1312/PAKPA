@@ -1,5 +1,8 @@
 /checkpoints/*
 /*.zip
+*Exp-Log.ipynb
+*Full.ipynb
+Test
 
 __pycache__/
 *.py[cod]
