@@ -8,7 +8,9 @@ import statistics
 import time
 import spacy
 from tqdm.contrib.concurrent import process_map  # or thread_map
+import warnings
 
+warnings.filterwarnings("ignore")
 nlp = spacy.load('en_core_web_lg')
 
 
@@ -90,35 +92,39 @@ if __name__ == "__main__":
                         help="The dataset for inference. Either 'yelp' or 'space'")
     parser.add_argument("--similarity_threshold", type=float, default=0.55, help="threshold for merging similar "
                                                                                  "aspect terms into clusters")
-    parser.add_argument("--num_worker", type=int, default=5, help="The number of workers for the clustering task")
+    parser.add_argument("--num_workers", type=int, default=5, help="The number of workers for the clustering task")
 
     args = parser.parse_args()
     input_reviews_absa_file = args.input_reviews_absa_file
     output_file_name = args.output_file_name
     dataset = args.dataset
     threshold = args.similarity_threshold # Threshold for merging similar aspect terms into clusters
-    num_worker = args.num_worker
+    num_workers = args.num_workers
 
     # # Read ABSA-processed Reviews
     df = pd.read_pickle(f"./data/{dataset}/{input_reviews_absa_file}")
     df.columns = [col.replace('prompt_', '').replace('aspect', 'aspects').replace('sentiment', 'sentiments') for col in
                   df.columns]
     df = df[df['sentiments'] != 'neutral']
+    if dataset == 'space':
+        df = df.rename(columns={'entity_id': 'business_id', 'entity_name': 'business_name'})
 
     # Aggregating
-    col_agg = {col: lambda x: x.iloc[0] for col in df.columns if col not in ['review_id', 'user_id', 'business_id',
+    col_agg = {col: lambda x: x.iloc[0] for col in df.columns if col not in ['review_id', 'business_id',
                                                                              'text', 'sentences',
                                                                              'aspect', 'sentiment', 'aspect_lemm']}
     sent_list_agg = {col: lambda x: x.tolist() for col in df.columns if
                      col in ['aspects', 'sentiments', 'aspects_lemm']}
     col_agg.update(sent_list_agg)
-    df = df.groupby(['review_id', 'user_id', 'business_id', 'text', 'sentences'], sort=False, as_index=False).agg(
+    # df = df.groupby(['review_id', 'business_id', 'text', 'sentences'], sort=False, as_index=False).agg(
+    df = df.groupby(['review_id', 'business_id', 'sentences'], sort=False, as_index=False).agg(
         col_agg).reset_index(drop=True)
 
     # Indexing
-    df = df.groupby(['review_id', 'user_id', 'business_id', 'text'],
+    # df = df.groupby(['review_id', 'business_id', 'text'],
+    df = df.groupby(['review_id', 'business_id'],
                     sort=False, as_index=False).apply(lambda grp: grp.reset_index(drop=True)).reset_index()
-    df = df.rename(columns={'text': 'review_content'})
+    # df = df.rename(columns={'text': 'review_content'})
     df['id'] = df['review_id'].astype(str) + "######" + df['level_1'].astype(str)
 
     # Preprocessing
@@ -150,7 +156,7 @@ if __name__ == "__main__":
 
     # Perform clustering
     start_time = time.time()
-    clusters_info = process_map(deduplicate, inputs[:2], max_workers=num_workers)
+    clusters_info = process_map(deduplicate, inputs, max_workers=num_workers)
     print("TIME ELAPSED", time.time() - start_time)
 
     # Process the results
@@ -168,4 +174,4 @@ if __name__ == "__main__":
         dfs += [aspect_clusters_df]
 
     summ_df = pd.concat(dfs)
-    summ_df.to_pickle(f"./data/{dataset}/{output_file_name}.pkl")
+    summ_df.to_pickle(f"./data/{dataset}/{output_file_name}")

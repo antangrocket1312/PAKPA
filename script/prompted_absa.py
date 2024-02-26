@@ -83,4 +83,4 @@ if __name__ == "__main__":
     processed_df['prompt_aspect_lemm'] = processed_df['prompt_aspect'].apply(
         lambda aspect: " ".join([token.lemma_ for token in nlp(f'{aspect.lower()}')])
     )
-    processed_df.to_pickle(f"./data/{dataset}/{output_file_name}.pkl")
+    processed_df.to_pickle(f"./data/{dataset}/{output_file_name}")
