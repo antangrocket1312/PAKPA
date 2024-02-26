@@ -1,0 +1,63 @@
+You will be provided with a review sentence delimited by triple quotes.
+A review sentence usually covers the customer opinions expressed on different aspects of a product or service.
+
+You were tasked to perform Aspect-based Sentiment Analysis to extract the user sentiments expressed on different aspects in the review.
+Formally, we define subtask of extracting the aspects it corresponding sentiments as Aspect Extraction and Aspect Sentiment Classification:
+- Aspect Extraction: Identifying aspect targets in opinionated text, i.e., in detecting the specific aspects of a product or service the opinion holder is either praising or complaining about. An aspect can have more than one word
+- Aspect Sentiment Classification: From the extracted aspect target, predict the sentiment polarity of user opinions on the aspect. The sentiment polarity value can be: "positive", "neutral", and "negative".
+
+Provide the answer in JSON format with the following keys: aspect, sentiment
+
+Review sentence: """Movies cost $ 14 , and there is no student discount at this location ."""
+Answer: [{'aspect': 'student discount', 'sentiment': 'negative'}]
+
+Review sentence: """Our tour guide was knowledgeable about the property and about all things Frank Lloyd Wright ."""
+Answer: [{'aspect': 'tour guide', 'sentiment': 'positive'}]
+
+Review sentence: """BMW Henderson made my purchase easy and stress free ."""
+Answer: [{'aspect': 'purchase', 'sentiment': 'positive'}]
+
+Review sentence: """I had a male therapist and he was amazing !"""
+Answer: [{'aspect': 'male therapist', 'sentiment': 'positive'}]
+
+Review sentence: """We were pleasantly surprised with how exceptional our stay was at this hotel on a Saturday night ."""
+Answer: [{'aspect': 'stay', 'sentiment': 'positive'}]
+
+Review sentence: """The food was excellent but the portion is so small ."""
+Answer: [{'aspect': 'food', 'sentiment': 'positive'}, {'aspect': 'portion', 'sentiment': 'negative'}]
+
+Review sentence: """The food has great taste but the price is too high and the service is super slow ."""
+Answer: [{'aspect': 'food', 'sentiment': 'positive'}, {'aspect': 'price', 'sentiment': 'negative'}, {'aspect': 'service', 'sentiment': 'negative'}]
+
+Review sentence: """Once we retuned home , the wait for the shuttle was less than 5 minutes and got us to our car within 10 minutes max ."""
+Answer: [{'aspect': 'wait', 'sentiment': 'positive'}]
+
+Review sentence: """Blood on master shower curtain was the disgusting top of our experience ."""
+Answer: [{'aspect': 'shower curtain', 'sentiment': 'negative'}]
+
+Review sentence: """The hotel restaurant had a fabulous breakfast buffet ."""
+Answer: [{'aspect': 'breakfast buffet', 'sentiment': 'positive'}]
+
+Review sentence: """What a great array of appetizers they have on their menu and between these hours all are half price ."""
+Answer: [{'aspect': 'appetizers', 'sentiment': 'positive'}, {'aspect': 'price', 'sentiment': 'positive'}]
+
+Review sentence: """Don't let this bad location mess it up for your brand and for everyone who needs a reasonable priced hotel to stay in ."""
+Answer: [{'aspect': 'location', 'sentiment': 'negative'}, {'aspect': 'prices', 'sentiment': 'positive'}]
+
+Review sentence: """Unfortunately, with our show tickets, we didn't have time to sample any desserts ."""
+Answer: [{'aspect': 'dessert', 'sentiment': 'neutral'}]
+
+Review sentence: """The food did take a few extra minutes to come, but the cute waiters' jokes and friendliness made up for it ."""
+Answer: [{'aspect': 'food', 'sentiment': 'neutral'}, {'aspect': 'waiters', 'sentiment': 'positive'}]
+
+Review sentence: """Be sure to accompany your food with one of their fresh juice concoctions ."""
+Answer: [{'aspect': 'food', 'sentiment': 'neutral'}, {'aspect': 'fresh juice concoctions', 'sentiment': 'positive'}]
+
+Review sentence: """During busy hrs, i recommend that you make a reservation ."""
+Answer: [{'aspect': 'reservation', 'sentiment': 'neutral'}]
+
+Review sentence: """The menu, which changes seasonally, shows both regional and international influences ."""
+Answer: [{'aspect': 'menu', 'sentiment': 'neutral'}]
+
+Review sentence: """Our waitress had apparently never tried any of the food, and there was no one to recommend any wine."""
+Answer: [{'aspect': 'waitress', 'sentiment': 'negative'}, {'aspect': 'food', 'sentiment': 'neutral'}, {'aspect': 'wine', 'sentiment': 'neutral'}]
