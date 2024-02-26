@@ -65,15 +65,25 @@ We offer two options to perform inference of our pipeline framework (PAKPA), usi
 Each file in the respective folder represent a stage of the pipeline. Below is the directory structures for stages of the pipeline:
 ```
 notebook
-├── space (or) yelp
+├── yelp
 │   ├── Prompted_ABSA.ipynb
 │   ├── Aspect_Sentiment_Comment_Clustering.ipynb
-│   ├── KP_Generation.ipynb
+│   ├── Prompted_Aspect_KPG.ipynb
+├── space
+│   ├── Prompted_ABSA.ipynb
+│   ├── Aspect_Sentiment_Comment_Clustering.ipynb
+│   ├── Prompted_Aspect_KPG.ipynb
+│   ├── Automatic_KP_Quality_Evaluation.ipynb
 script
 ├── prompted_absa.py
 ├── aspect_sentiment_comment_clustering.py
-├── kp_generation.py
+├── prompted_aspect_kpg.py
 ```
+File description:
+* ```Prompted_ABSA.ipynb``` or ```prompted_absa.py``` : Perform Stage 1 on input reviews
+* ```Aspect_Sentiment_Comment_Clustering.ipynb``` or ```aspect_sentiment_comment_clustering.py```: Perform Stage 2 on reviews already analyzed for ABSA
+* ```Prompted_Aspect_KPG.ipynb``` or ```prompted_aspect_kpg.py```: Perform Stage 3 on clusters of comments
+* ```Automatic_KP_Quality_Evaluation.ipynb```: Automatic evaluation of KP Quality with reference summaries as ground truth (only applicable for SPACE dataset)
 
 ### Hosting an LLaMas model for Prompted ABSA
 We used [FastChat](https://github.com/lm-sys/FastChat/tree/main) to host a LLaMas for prompted in-context learning of ABSA.
@@ -112,4 +122,29 @@ python3 -m fastchat.serve.openai_api_server --host localhost --port 8000
 
 [//]: # (# Evaluation of KP Textual Quality with Aspect-Specific Ground Truth)
 
-# More code coming soon.
+### Stage 1: Prompted ABSA
+```bash
+python scripts/prompted_absa.py \ 
+    --input_reviews_file input_reviews.pkl \ 
+    --output_file_name reviews_absa_processed.pkl \ 
+    --dataset {yelp or space}  
+```
+
+### Stage 2: Aspect-Sentiment-based Comment Clustering
+```bash
+python script/aspect_sentiment_comment_clustering.py 
+    --input_reviews_file reviews_absa_processed.pkl \ 
+    --output_file_name aspect_sentiment_clusters.pkl \ 
+    --dataset {yelp or space} \
+    --similarity_threshold 0.55 
+```
+
+### Stage 3: Aspect-Sentiment-based Comment Clustering
+```bash
+python script/prompted_aspect_kpg.py 
+    --input_reviews_file aspect_sentiment_clusters.pkl \ 
+    --output_file_name kpg_summaries.pkl \ 
+    --dataset {yelp or space} \
+    --model gpt-3.5-turbo \ 
+    --openai_api_key {Your OpenAI API Key}
+```
