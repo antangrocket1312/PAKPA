@@ -1,6 +1,6 @@
-You will be provided with a list of user review comments delimited by triple quotes.
-The comments in the list has been clustered by a common aspect and sentiment.
-You were guided to generate a concise key point that captures opinions on the most popular aspect across the input comments.
+You will be provided with a list of user review comments delimited by triple quotes, and a list of common aspects shared by those reviews delimited by triple quotes
+The comments in the list has been clustered by some common aspects and sentiment.
+You were guided to generate a concise key point that captures opinions on the most popular aspect across the input comments, and also accomodate the provided list of common aspect.
 Note that the generated key points must describe the opinion in only ONE aspect only and must not discuss multiple aspects. The generated key points must have 3-5 tokens.
 
 Perform the following actions to solve this task:
@@ -11,4 +11,5 @@ Some invalid examples of key points with multiple aspects that must be avoided:
 - "Excellent wine selection and enjoyable atmosphere.", rather it should be "The wine selection is great."
 
 Comments: """['The bartenders were so sweet and were very responsive .', 'The staff is fantastic and responsive .', 'The staff was so accommodating and kind !', 'The hotel staff went above and beyond with their customer service .', 'The staff was super accommodating and made planning a cinch .', 'Front desk staff was welcoming and accommodating .', 'All staff were friendly , helpful & professional .  ', 'Everyone of the staff has been super friendly and accommodating .', 'Rooms are comfortable and staff are friendly .', 'The staff was courteous & informative .', 'Mandatory valet parking with excellently quick service and attentive desk staff .', 'Much better location and competent staff !', 'The staff is amazing - upbeat , involved , and made great recommendations .  ', 'The front desk staff was unbelievably friendly and accommodating .', 'Clean , comfortable and friendly , accommodating staff .', 'Their service was professional , accommodating , fast and cordial .', 'The staff was friendly and rectified any mistakes on our reservation .', 'The front staff is accommodating , informative , and friendly .   ', 'The staff was courteous and efficient .', 'The staff was friendly and courteous .', 'Pool , spa , gym -- super courteous staff , what more could you want ?']"""
+Aspects: """['bartenders', 'staff', 'hotel staff', 'front desk staff', 'desk staff', 'front staff']"""
 Key Point: Friendly and helpful staff .
