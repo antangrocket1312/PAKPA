@@ -12,7 +12,9 @@ import pandas as pd
 import json
 import openai
 import time
+import warnings
 
+warnings.filterwarnings("ignore")
 nlp = spacy.load('en_core_web_sm')
 openai.api_key = "EMPTY"  # Not support yet
 openai.api_base = "http://localhost:8000/v1"
@@ -100,11 +102,13 @@ if __name__ == "__main__":
                         help="The name of the output reviews file to be saved under 'yelp' or 'space'.")
     parser.add_argument("--dataset", type=str, required=True,
                         help="The dataset for inference. Either 'yelp' or 'space'")
+    parser.add_argument("--num_workers", type=int, default=5, help="The number of workers for the ABSA task")
 
     args = parser.parse_args()
     input_reviews_file = args.input_reviews_file
     output_file_name = args.output_file_name
     dataset = args.dataset
+    num_workers = args.num_workers
 
     # # Load dataset
     df = pd.read_pickle(f"./data/{dataset}/{input_reviews_file}")
@@ -115,8 +119,7 @@ if __name__ == "__main__":
     sampled_comment_df = preprocessing_comment_data(sampled_comment_df)
 
     # # Inference
-    num_workers = 5
-    root_path = f"./data/{dataset}/processed_absa_reviews"
+    root_path = f"./data/{dataset}/absa_reviews_cache"
     if dataset == 'space':
         sampled_comment_df['category'] = 'Hotel'
     inputs = [(root_path,
