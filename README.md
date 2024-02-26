@@ -70,9 +70,9 @@ notebook
 │   ├── Aspect_Sentiment_Comment_Clustering.ipynb
 │   ├── KP_Generation.ipynb
 script
-── prompted_absa.py
-── aspect_sentiment_comment_clustering.py
-── kp_generation.py
+├── prompted_absa.py
+├── aspect_sentiment_comment_clustering.py
+├── kp_generation.py
 ```
 
 ### Hosting an LLaMas model for Prompted ABSA
