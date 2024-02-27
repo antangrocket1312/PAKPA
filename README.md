@@ -9,22 +9,33 @@ This repository maintains the code, data, and model checkpoints for the paper *P
 [//]: # (# Code to release soon.)
 
 ## Installation
+It is recommended to set up the environment and install required libraries using conda. 
+It is also recommended that the machine should have GPUs to perform inference at a reasonable time.  
 ### 1. Create new virtual environment by
 ```bash
-conda env create -f environment.yml
-conda activate abkpa
+conda create --name pakpa python=3.7
+conda activate pakpa
 ```
 ### 2. Install Pytorch
-For other versions, please visit: [https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/)
-### Linux
+#### Windows or Linux
 ##### Using GPUs
 ```bash
-pip3 install torch torchvision torchaudio
-conda install -c anaconda cudatoolkit
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
-#### Using CPU
+##### Using CPU
 ```bash
-pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+conda install pytorch torchvision torchaudio cpuonly -c pytorch
+```
+#### Mac
+```bash
+conda install pytorch::pytorch torchvision torchaudio -c pytorch
+```
+For other versions, please visit: [https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/)
+
+### 3. Additional packages
+We need some additional packages to run the code. The list of packages is listed in ```requirements.txt```. On the main directory of the repository, run:
+```bash
+pip install -r requirements.txt
 ```
 
 ## Framework
