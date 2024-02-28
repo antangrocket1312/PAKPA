@@ -13,7 +13,7 @@ It is recommended to set up the environment and install required libraries using
 It is also recommended that the machine should have GPUs to perform inference at a reasonable time.  
 ### 1. Create new virtual environment by
 ```bash
-conda create --name pakpa python=3.7
+conda create --name pakpa python=3.9
 conda activate pakpa
 ```
 ### 2. Install Pytorch
