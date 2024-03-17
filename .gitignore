@@ -4,6 +4,8 @@
 *Full.ipynb
 *BACKUP.pkl
 Test
+*.zip
+KeyPoint-Analysis/KPG/BLEURT-20/
 
 __pycache__/
 *.py[cod]

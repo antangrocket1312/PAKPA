@@ -1,21 +1,23 @@
 import math
 from collections import defaultdict
 from numpy import *
-
+from BARTScore.bart_score import BARTScorer
 from bleurt_setbase import calculatingScore, preprocess_text_bleurt
-
 import bert_score
 from bert_score import BERTScorer
-
-from BARTScore.bart_score import BARTScorer
-
 import subprocess
+from pathlib import Path
+import os
 
-subprocess.run(['wget', 'https://storage.googleapis.com/bleurt-oss-21/BLEURT-20.zip'])
-subprocess.run(['unzip', 'BLEURT-20.zip'])
+bluert_file = Path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "BLEURT-20.zip"))
+if not bluert_file.exists():
+    subprocess.run(['wget', '-O', bluert_file, 'https://storage.googleapis.com/bleurt-oss-21/BLEURT-20.zip'])
+
+bluert_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "BLEURT-20")
+if not os.path.isdir(bluert_folder):
+    subprocess.run(['unzip', bluert_folder, '-d', Path(bluert_folder).parent.absolute()])
 
 bart_scorer = BARTScorer(checkpoint='facebook/bart-large-cnn')
-
 bert_scorer = BERTScorer(lang="en", rescale_with_baseline=True)
 
 def not_empty(text):
@@ -28,7 +30,7 @@ def multi_ref_keypGenerated(data):
         for j in range(len(data)):
             if (data["stance"][i] == data["stance"][j])&(data["topic"][i] == data["topic"][j]):
                 data["multi_cands"][i] += data["key_point"][j] +"="
-    
+
     return data
 
 def multi_ref_Goldkeyp(data):
@@ -37,7 +39,7 @@ def multi_ref_Goldkeyp(data):
         for j in range(len(data)):
             if (data["stance"][i] == data["stance"][j])&(data["topic"][i] == data["topic"][j]):
                 data["multi_cands"][i] += data["key_point_given"][j] +"="
-    
+
     return data
 
 #Since BART Score need the number of the references same for each candidate, thus will deal with separete.
@@ -64,7 +66,7 @@ def preprocess_text(data, metrics):
 
         multi_refs = [element.strip().split('=') for element in ref if element.strip()!='']
         refs = [list(filter(not_empty, element)) for element in multi_refs]
-  
+
     elif metrics == "softPrecision":
         cands = data['key_point'].tolist()
         ref = data['multi_cands'].tolist()
@@ -89,10 +91,10 @@ def softPrecision(data, metrics) -> float:
 
         #BART score cannot be processed for different numbers of reference sentences, so
         #check for the maximum number of reference sentences and match the size.
-        #We fill in the None for the missing sentences because we only pick one of the 
+        #We fill in the None for the missing sentences because we only pick one of the
         #maximum values and not the average, so there is no impact on performance
 
-        refs = balance_ref_num(refs)        
+        refs = balance_ref_num(refs)
 
         # generation scores from the first list of texts to the second list of texts.
         P = bart_scorer.multi_ref_score(cands, refs, agg="max", batch_size=4) # agg means aggregation, can be mean or max
@@ -109,12 +111,12 @@ def softPrecision(data, metrics) -> float:
         #For each generated keypoint, calculating the score between the generated keypoint-gold keypoint pair according to BLEURT.
         result = calculatingScore(references, candidates)
         df_compare_precision["BLEURT Score"] = result
-        
-        #After calculating the semantic quality of all candidates and reference pairs, the one with the highest score is selected as the correct pair. 
+
+        #After calculating the semantic quality of all candidates and reference pairs, the one with the highest score is selected as the correct pair.
         df_bestkp_pair_precision = df_compare_precision.loc[df_compare_precision.groupby(["candidate"])["BLEURT Score"].idxmax()]
         #take average of all best scores as the soft precision score.
         P_average = df_bestkp_pair_precision["BLEURT Score"].mean()
-    
+
     return P_average
 
 def softRecall(data, metrics) -> float:
@@ -135,10 +137,10 @@ def softRecall(data, metrics) -> float:
         R = bart_scorer.multi_ref_score(cands, refs, agg="max", batch_size=4)
 
         #mapping the score to (0,1]
-        R_average = math.tanh(math.exp((mean(R)/2)+1.3)) 
+        R_average = math.tanh(math.exp((mean(R)/2)+1.3))
         #R_average = (0.25 * mean(R)) + 1
         #R_average = math.exp(mean(R))
-        
+
     elif metrics == "BLEURT":
         #build the compaire list
         references, candidates, df_compare_recall = preprocess_text_bleurt(data, metrics = "softRecall")
@@ -146,10 +148,10 @@ def softRecall(data, metrics) -> float:
         #For each golden keypoint, calculating the score between the generated keypoint-gold keypoint pair according to BLEURT.
         result = calculatingScore(references, candidates)
         df_compare_recall["BLEURT Score"] = result
-        
-        #After calculating the semantic quality of all candidates and reference pairs, the one with the highest score is selected as the correct pair. 
+
+        #After calculating the semantic quality of all candidates and reference pairs, the one with the highest score is selected as the correct pair.
         df_bestkp_pair_recall = df_compare_recall.loc[df_compare_recall.groupby(["candidate"])["BLEURT Score"].idxmax()]
-        
+
         #take average of all best scores as the soft precision score.
         R_average = df_bestkp_pair_recall["BLEURT Score"].mean()
 
@@ -167,7 +169,7 @@ def softevaluation(data, softmetrics, metrics) -> float:
 
     elif softmetrics == "recall":
         result = softRecall(data, metrics)
-    
+
     else:
         precision = softPrecision(data, metrics)
         recall = softRecall(data, metrics)
