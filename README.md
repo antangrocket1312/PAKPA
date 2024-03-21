@@ -150,7 +150,7 @@ python script/aspect_sentiment_comment_clustering.py
     --similarity_threshold 0.55 
 ```
 
-### Stage 3: Aspect-based Key Point Generation
+### Stage 3: Prompted Key Point Generation (KPG)
 ```bash
 python script/prompted_aspect_kpg.py 
     --input_reviews_file aspect_sentiment_clusters.pkl \ 
