@@ -121,7 +121,7 @@ if __name__ == "__main__":
     # # Inference
     root_path = f"./data/{dataset}/absa_reviews_cache"
     if dataset == 'space':
-        sampled_comment_df['category'] = 'Hotel'
+        sampled_comment_df['category'] = 'Hotels'
     inputs = [(root_path,
                domain,
                sampled_comment_df[sampled_comment_df['category'] == domain].reset_index(drop=True)

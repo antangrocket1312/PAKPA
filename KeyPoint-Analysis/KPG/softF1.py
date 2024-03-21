@@ -1,7 +1,7 @@
 import math
 from collections import defaultdict
 from numpy import *
-from BARTScore.bart_score import BARTScorer
+# from BARTScore.bart_score import BARTScorer
 from bleurt_setbase import calculatingScore, preprocess_text_bleurt
 import bert_score
 from bert_score import BERTScorer
@@ -9,16 +9,16 @@ import subprocess
 from pathlib import Path
 import os
 
-bluert_file = Path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "BLEURT-20.zip"))
-if not bluert_file.exists():
-    subprocess.run(['wget', '-O', bluert_file, 'https://storage.googleapis.com/bleurt-oss-21/BLEURT-20.zip'])
-
-bluert_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "BLEURT-20")
-if not os.path.isdir(bluert_folder):
-    subprocess.run(['unzip', bluert_folder, '-d', Path(bluert_folder).parent.absolute()])
-
-bart_scorer = BARTScorer(checkpoint='facebook/bart-large-cnn')
-bert_scorer = BERTScorer(lang="en", rescale_with_baseline=True)
+# bluert_file = Path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "BLEURT-20.zip"))
+# if not bluert_file.exists():
+#     subprocess.run(['wget', '-O', bluert_file, 'https://storage.googleapis.com/bleurt-oss-21/BLEURT-20.zip'])
+#
+# bluert_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "BLEURT-20")
+# if not os.path.isdir(bluert_folder):
+#     subprocess.run(['unzip', bluert_folder, '-d', Path(bluert_folder).parent.absolute()])
+#
+# bart_scorer = BARTScorer(checkpoint='facebook/bart-large-cnn')
+# bert_scorer = BERTScorer(lang="en", rescale_with_baseline=True)
 
 def not_empty(text):
     return text and text.strip()
