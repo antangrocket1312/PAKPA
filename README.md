@@ -71,6 +71,8 @@ Files in each folder:
 * ```reviews_clustered.pkl```: clusters of comments already clustered by their similar aspect terms &#40;Stage 2&#41;)
 * ```summaries.pkl```: final KP summaries produced for the clusters by the framework &#40;Stage 3&#41;)
 
+All prompts are located under [```/prompts```](/prompts)
+
 ## Inference
 We offer two options to perform inference of our pipeline framework (PAKPA), using Jupyter Notebook files (```notebook```) or Python inference scripts (```script```). 
 Each file in the respective folder represent a stage of the pipeline. Below is the directory structures for stages of the pipeline:
